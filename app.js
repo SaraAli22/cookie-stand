@@ -1,3 +1,4 @@
+'use strict';
 
  let hours = [
   "6am",
@@ -14,7 +15,7 @@
   "5pm",
   "6pm",
   "7pm"];
-
+let tableEl=document.getElementById('container');
 let store = [];
 function Store(storeName, minCustPerHour, maxCustPerHour,avgCustCookies) {
     this.storeName = storeName;
@@ -28,124 +29,127 @@ function Store(storeName, minCustPerHour, maxCustPerHour,avgCustCookies) {
 
 }
 
-
+console.log(store);
 
 Store.prototype.getrandomCustPerHour = function () {
-    for (let hour = 0; i < hours.length; hour++) {
-      PerHour=this.randomCustPerHour.push(Math.floor(Math.random() * (this.maxCustPerHour - this.minCustPerHour + 1) + this.minCustPerHour);
-        this.randomCustPerHour= [].push(PerHour);
-
+    for (let hour = 0; hour < hours.length; hour++) {
+      this.randomCustPerHour.push(Math.floor(getRandomArbitrary(this.minCustPerHour,this.maxCustPerHourt)));
+        /*this.randomCustPerHour.push(PerHour);*/
+// console.log(this.randomCustPerHour)
     }
-}
+};
 
-
-Store.prototype.salesPerHour = function () {
-    for (let hour = 0; i < hours.length; hour++) {
-        let Hhour = Math.ceil(this.avgCustCookie * this.randomCustPerHour[hour]);
-        this.salesPerHour.push(perhour);
-        this.totalPerHour += Hhour;
-
+function getRandomArbitrary(min, max) {
+    return Math.random() * (max - min) + min;
+  }
+Store.prototype.GetsalesPerHour = function () {
+    for (let hour = 0; hour < hours.length; hour++) {
+        let Hhour = Math.ceil(this.avgCustCookies * this.randomCustPerHour[hour]);
+        this.salesPerHour.push(Hhour);
+        this.totalPerHour += this.salesPerHour[hour];
+ console.log (this.totalPerHour);
     }
 
-}
+};
 
 Store.prototype.render = function () {
-    let tableC = document.createElement('tr');
-    tableEl.appendChild(tableC);
+    let rowEl = document.createElement('tr');
+    tableEl.appendChild(rowEl);
 
-    let body = document.createElement('td');
-    tableC.appendChild(body);
-    Information.textContent = this.storeName;
-    for (let hour= 0; i < hours.length; hour++) {
+    let dataEl = document.createElement('td');
+    rowEl.appendChild(dataEl);
+    dataEl.textContent = this.storeName;
+    for (let hour= 0; hour< hours.length; hour++) {
         let tdEl = document.createElement('td');
-        tableC.appendChild(tdEl);
+        rowEl.appendChild(tdEl);
         tdEl.textContent = this.salesPerHour[hour];
     }
     let tdEl = document.createElement('td');
-    tableC.appendChild(tdEl);
-    tdEl.textContent = this.totalPerHourtotal;
+    rowEl.appendChild(tdEl);
+    tdEl.textContent = this.totalPerHour;
+    console.log(this.totalPerHour);
 }
 
 
-let divEl = document.getElementById('Container');
+let divEl = document.getElementById('div');
 let articleEl = document.createElement('article');
 divEl.appendChild(articleEl);
-let tableEl = document.createElement('table');
+/*let tableEl = document.createElement('table');*/
 articleEl.appendChild(tableEl);
 
 
 
 
-function tableHeader() {
-    let tableC = document.createElement('tr');
-    tableEl.appendChild(tableC);
+function TableHeader() {
+    let rowEl2 = document.createElement('tr');
+    tableEl.appendChild(rowEl2);
     let tableHeader = document.createElement('th');
-    tableC.appendChild(tableHeader);
+    rowEl2.appendChild(tableHeader);
     tableHeader.textContent = " ";
     for (let hour = 0; hour < hours.length; hour++) {
         let thEl = document.createElement('th');
-        tableC.appendChild(thEl);i
+        rowEl2.appendChild(thEl);
         thEl.textContent = hours[hour];
     }
 
     let th2 = document.createElement('th')
-    tableC.appendChild(th2);
+    rowEl2.appendChild(th2);
     th2.textContent = 'Daily Location Total'
 }
 
 function LastRow() {
-    let tableC = document.createElement('tr');
-    tableEl.appendChild(tableC);
-    let Data = document.createElement('td');
-    tableC.appendChild(body);
-    Data.textContent = 'Totals';
+    let rowEl3 = document.createElement('tr');
+    tableEl.appendChild(rowEl3);
+    let thEl3 = document.createElement('th');
+    rowEl3.appendChild(thEl3);
+    thEl3.textContent = 'Totals';
 
     let Total = 0;
-    for (let hour = 0; i < hours.length; hour++) {
+    for (let hour = 0; hour < hours.length; hour++) {
         let PerhourTotal = 0;
-        for (let i = 0; i < Store.length; i++) {
-            PerhourTotal = PerhourTotal + Store[j].salesPerHour[i];
-            Total += Store[i].salesPerHour[i];
+        for (let j = 0; j < store.length; j++) {
+            PerhourTotal = PerhourTotal + store[j].salesPerHour[hour];
+            Total += store[j].salesPerHour[hour];
         }
 
-        let tdElement = document.createElement('td');
-        tableC.appendChild(tdElement);
-        tdElement.textContent = PerhourTotal;
+        let thEl3 = document.createElement('th');
+        rowEl3.appendChild(thEl3);
+        thEl3.textContent = PerhourTotal;
     }
 
-    let tdElement = document.createElement('td');
-    tableC.appendChild(tdElement);
-    tdElement.textContent = Total;
+   let thEl4 = document.createElement('th');
+    rowEl3.appendChild(thEl4);
+    thEl4.textContent = Total;
 }
 
 
-tableHeader();
+TableHeader();
 
-let seattle = Store('Seattle', 23, 65, 6.3);
+let seattle = new Store('Seattle', 23, 65, 6.3);
 seattle.getrandomCustPerHour();
-seattle.salesPerHour();
+seattle.GetsalesPerHour();
 seattle.render();
 
-let tokyo =Store('Tokyo', 3, 24, 1.2);
+let tokyo =new Store('Tokyo', 3, 24, 1.2);
 tokyo.getrandomCustPerHour();
-tokyo.salesPerHour();
+tokyo.GetsalesPerHour();
 tokyo.render();
 
-let dubai =Store('Dubai', 11, 38, 3.7);
+let dubai =new Store('Dubai', 11, 38, 3.7);
 dubai.getrandomCustPerHour();
-dubai.salesPerHour();
+dubai.GetsalesPerHour();
 dubai.render();
 
 
-let paris =Store('Paris', 20, 38, 2.3);
+let paris =new Store('Paris', 20, 38, 2.3);
 paris.getrandomCustPerHour();
-paris.salesPerHour();
+paris.GetsalesPerHour();
 paris.render();
 
 
-let lima =Store('Lima', 2, 16, 4.6);
+let lima =new Store('Lima', 2, 16, 4.6);
 lima.getrandomCustPerHour();
-lima.salesPerHour();
+lima.GetsalesPerHour();
 lima.render();
 
 LastRow();
